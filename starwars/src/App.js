@@ -3,28 +3,27 @@ import './App.css';
 import axios from 'axios';
 import { Container, Divider } from 'semantic-ui-react'; 
 import CharacterMap from './components/CharacterMap';
+import Characters from './components/Characters';
 
 const App = () => {
 
-  const [state,setState] = useState({
-    gender: '',
-    height: '',
-    homeworld: '',
-    mass: '',
+  const [swapiState,setSwapiState] = useState([{
     name: '',
-    species: ''
-  });
+    birth_year: '',
+    species:['']
+  }]);
 
-
+console.log(swapiState);
   useEffect(()=>{
     fecthSwapi();
   }, []);
 
   function fecthSwapi(){
-    axios.get( 'https://swapi.co/api/people/')
+    axios
+    .get( 'https://swapi.co/api/people/')
     .then((res)=>{
       console.log('My data', res.data)
-      setState(res.data);
+      setSwapiState(res.data.results);
     })
     .catch(error=> console.log(error))
   }
@@ -41,7 +40,8 @@ const App = () => {
     <Container>
       <h1 className="Header">React Wars</h1>
       <Divider />
-        <CharacterMap />
+        <CharacterMap characters={swapiState}/>
+        
       </Container>
     </div>
   );
