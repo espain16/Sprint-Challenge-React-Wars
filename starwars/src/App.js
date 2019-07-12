@@ -1,7 +1,30 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
+import axios from 'axios';
 
 const App = () => {
+
+  const [state,setState] = useState({
+    gender: '',
+    height: '',
+    homeworld: '',
+    mass: '',
+    name: '',
+    species: ''
+  });
+
+
+  useEffect(()=>{
+    fecthSwapi();
+  }, []);
+
+  function fecthSwapi(){
+    axios.get( 'https://swapi.co/api/people/1/')
+    .then((response)=>{
+      setState(response.data)
+    })
+    .catch(error=> console.log(error))
+  }
   // Try to think through what state you'll need for this app before starting. Then build out
   // the state properties here.
 
