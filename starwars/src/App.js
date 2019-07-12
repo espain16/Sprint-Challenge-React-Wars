@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
 import axios from 'axios';
+import { Container, Divider } from 'semantic-ui-react'; 
+import CharacterMap from './components/CharacterMap';
 
 const App = () => {
 
@@ -19,9 +21,10 @@ const App = () => {
   }, []);
 
   function fecthSwapi(){
-    axios.get( 'https://swapi.co/api/people/1/')
-    .then((response)=>{
-      setState(response.data)
+    axios.get( 'https://swapi.co/api/people/')
+    .then((res)=>{
+      console.log('My data', res.data)
+      setState(res.data);
     })
     .catch(error=> console.log(error))
   }
@@ -31,10 +34,15 @@ const App = () => {
   // Fetch characters from the star wars api in an effect hook. Remember, anytime you have a 
   // side effect in a component, you want to think about which state and/or props it should
   // sync up with, if any.
+ 
 
   return (
     <div className="App">
+    <Container>
       <h1 className="Header">React Wars</h1>
+      <Divider />
+        <CharacterMap />
+      </Container>
     </div>
   );
 }
